@@ -1,7 +1,7 @@
 <?php
 class Database {
     private $host = "localhost";
-    private $db_name = "ecommerce_db";
+    private $db_name = "underpure_new";
     private $username = "root";  // Apni MySQL username dalen
     private $password = "";      // Apni MySQL password dalen
     public $conn;

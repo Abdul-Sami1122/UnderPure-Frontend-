@@ -1,5 +1,5 @@
 // Real Backend API calls - connects to PHP backend
-const API_BASE = "http://localhost/backend";
+const API_BASE = "http://localhost/backend/index.php";
 
 // Helper function for API calls
 async function apiCall(endpoint, options = {}) {

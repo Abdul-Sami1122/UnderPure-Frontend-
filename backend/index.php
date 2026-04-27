@@ -17,14 +17,29 @@ require_once 'config/db.php';
 $db = new Database();
 $connection = $db->getConnection();
 
-// 3. Request Parse karna
+// 3. Request Parse karna robustly
 $method = $_SERVER['REQUEST_METHOD'];
 $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+// Base path remove karna e.g. /backend
+$basePath = dirname($_SERVER['SCRIPT_NAME']);
+if (strpos($requestUri, $basePath) === 0) {
+    $requestUri = substr($requestUri, strlen($basePath));
+}
+
+// Remove leading slash aur index.php agar URL me hai
+$requestUri = ltrim($requestUri, '/');
+if (strpos($requestUri, 'index.php/') === 0) {
+    $requestUri = substr($requestUri, 10);
+} elseif ($requestUri === 'index.php') {
+    $requestUri = '';
+}
+
 $uri = explode('/', $requestUri);
 
-// Endpoint parsing - adjust this based on how you serve the folder
-$endpoint = isset($uri[2]) ? $uri[2] : null; 
-$id = isset($uri[3]) ? $uri[3] : null;
+// Ab hamesha first segment endpoint hoga aur second id/action
+$endpoint = isset($uri[0]) && $uri[0] !== '' ? $uri[0] : null;
+$id = isset($uri[1]) ? $uri[1] : null;
 
 // Payload get karna (POST/PUT ke liye)
 $inputData = json_decode(file_get_contents("php://input"), true);
