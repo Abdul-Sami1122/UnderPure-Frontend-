@@ -60,18 +60,19 @@ try {
 
     $token = JwtHelper::generateToken($tokenPayload);
 
-    // Response bhejna
+    // Response bhejna - frontend authStore ke format me
     http_response_code(200);
     echo json_encode([
         "success" => true,
         "message" => "Login successful.",
         "token" => $token,
         "user" => [
-            "id" => (int)$user['id'],
+            "id" => (string)$user['id'],
             "name" => $user['name'],
             "email" => $user['email'],
             "phone" => $user['phone'],
-            "role" => $user['role']
+            "isAdmin" => $user['role'] === 'admin',
+            "createdAt" => date('c')
         ]
     ]);
 

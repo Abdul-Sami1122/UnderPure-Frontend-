@@ -9,13 +9,26 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Products Table
+-- Products Table (frontend ke data model se match)
 CREATE TABLE products (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
+    slug VARCHAR(255) UNIQUE NOT NULL,
+    category VARCHAR(100) NOT NULL DEFAULT 'bras',
     description TEXT,
+    long_description TEXT DEFAULT NULL,
     price DECIMAL(10, 2) NOT NULL,
-    stock INT DEFAULT 0,
+    original_price DECIMAL(10, 2) DEFAULT NULL,
+    image VARCHAR(500) DEFAULT NULL,
+    images JSON DEFAULT NULL,
+    sizes JSON DEFAULT NULL,
+    colors JSON DEFAULT NULL,
+    badge VARCHAR(50) DEFAULT NULL,
+    featured TINYINT(1) DEFAULT 0,
+    in_stock TINYINT(1) DEFAULT 1,
+    stock_count INT DEFAULT 0,
+    rating DECIMAL(2,1) DEFAULT 0,
+    review_count INT DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

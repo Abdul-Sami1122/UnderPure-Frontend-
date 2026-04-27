@@ -112,7 +112,7 @@ try {
         $itemStmt->execute();
 
         // Step C: Product stock update karna
-        $stockQuery = "UPDATE products SET stock = stock - :qty WHERE id = :pid AND stock >= :qty";
+        $stockQuery = "UPDATE products SET stock_count = stock_count - :qty WHERE id = :pid AND stock_count >= :qty";
         $stockStmt = $conn->prepare($stockQuery);
         $stockStmt->bindParam(':qty', $quantity, PDO::PARAM_INT);
         $stockStmt->bindParam(':pid', $productId, PDO::PARAM_INT);

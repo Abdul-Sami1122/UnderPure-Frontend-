@@ -1,6 +1,7 @@
 <?php
 // Register API - naya user account banana
 require_once __DIR__ . '/../../config/db.php';
+require_once __DIR__ . '/../../helpers/JwtHelper.php';
 
 // Database connection
 $db = new Database();
@@ -75,15 +76,27 @@ try {
 
     if ($stmt->execute()) {
         $userId = $conn->lastInsertId();
+
+        // JWT Token generate karna - frontend ko turant login kar dega
+        $tokenPayload = [
+            "user_id" => (int)$userId,
+            "name" => $name,
+            "email" => $email,
+            "role" => $role
+        ];
+        $token = JwtHelper::generateToken($tokenPayload);
+
         http_response_code(201);
         echo json_encode([
             "success" => true,
             "message" => "User successfully register ho gaya.",
+            "token" => $token,
             "user" => [
-                "id" => (int)$userId,
+                "id" => (string)$userId,
                 "name" => $name,
                 "email" => $email,
-                "role" => $role
+                "isAdmin" => $role === 'admin',
+                "createdAt" => date('c')
             ]
         ]);
     } else {
