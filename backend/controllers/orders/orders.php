@@ -88,14 +88,8 @@ try {
             }
             break;
 
-        // ===== PUT - Order status update karna (Admin Only) =====
+        // ===== PUT - Order status update karna (Admin Only or User Cancelling) =====
         case 'PUT':
-            if ($loggedInUser['role'] !== 'admin') {
-                http_response_code(403);
-                echo json_encode(["error" => "Sirf admin order status update kar sakta hai."]);
-                exit;
-            }
-
             if (!$orderId) {
                 http_response_code(400);
                 echo json_encode(["error" => "Order ID URL me zaroori hai."]);
@@ -111,12 +105,52 @@ try {
             }
 
             $status = $data['status'];
-            $allowedStatuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
-            if (!in_array($status, $allowedStatuses)) {
-                http_response_code(400);
-                echo json_encode(["error" => "Invalid status. Allowed: " . implode(', ', $allowedStatuses)]);
+            
+            // Check current order ownership and status
+            $checkQuery = "SELECT user_id, status FROM orders WHERE id = :id";
+            $checkStmt = $conn->prepare($checkQuery);
+            $checkStmt->bindParam(':id', $orderId, PDO::PARAM_INT);
+            $checkStmt->execute();
+            $currentOrder = $checkStmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$currentOrder) {
+                http_response_code(404);
+                echo json_encode(["error" => "Order nahi mila."]);
                 exit;
             }
+
+            // Role based logic
+            if ($loggedInUser['role'] !== 'admin') {
+                // Customer logic
+                if ($currentOrder['user_id'] != $loggedInUser['user_id']) {
+                    http_response_code(403);
+                    echo json_encode(["error" => "Aap dusre ka order update nahi kar sakte."]);
+                    exit;
+                }
+                
+                // Customers can only cancel their own pending orders
+                if ($status !== 'cancelled') {
+                    http_response_code(403);
+                    echo json_encode(["error" => "Aap sirf order cancel kar sakte hain."]);
+                    exit;
+                }
+                if ($currentOrder['status'] !== 'pending') {
+                    http_response_code(400);
+                    echo json_encode(["error" => "Sirf pending orders cancel kiye ja sakte hain."]);
+                    exit;
+                }
+            } else {
+                // Admin logic
+                $allowedStatuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
+                if (!in_array($status, $allowedStatuses)) {
+                    http_response_code(400);
+                    echo json_encode(["error" => "Invalid status. Allowed: " . implode(', ', $allowedStatuses)]);
+                    exit;
+                }
+            }
+
+            // Transaction for updating status and potentially restoring stock
+            $conn->beginTransaction();
 
             $updateQuery = "UPDATE orders SET status = :status WHERE id = :id";
             $stmt = $conn->prepare($updateQuery);
@@ -124,26 +158,41 @@ try {
             $stmt->bindParam(':id', $orderId, PDO::PARAM_INT);
             $stmt->execute();
 
-            if ($stmt->rowCount() > 0) {
-                // Updated order wapas fetch karna
-                $fetchQuery = "SELECT o.*, u.name as user_name, u.email as user_email FROM orders o 
-                              JOIN users u ON o.user_id = u.id WHERE o.id = :oid";
-                $fetchStmt = $conn->prepare($fetchQuery);
-                $fetchStmt->bindParam(':oid', $orderId, PDO::PARAM_INT);
-                $fetchStmt->execute();
-                $order = $fetchStmt->fetch(PDO::FETCH_ASSOC);
-
-                $itemsQuery = "SELECT * FROM order_items WHERE order_id = :oid";
+            // If order is cancelled, restore stock
+            if ($status === 'cancelled' && $currentOrder['status'] !== 'cancelled') {
+                $itemsQuery = "SELECT product_id, quantity FROM order_items WHERE order_id = :oid";
                 $itemsStmt = $conn->prepare($itemsQuery);
                 $itemsStmt->bindParam(':oid', $orderId, PDO::PARAM_INT);
                 $itemsStmt->execute();
-                $items = $itemsStmt->fetchAll(PDO::FETCH_ASSOC);
+                $itemsToRestore = $itemsStmt->fetchAll(PDO::FETCH_ASSOC);
 
-                echo json_encode(["success" => true, "message" => "Status updated.", "order" => formatOrder($order, $items)]);
-            } else {
-                http_response_code(404);
-                echo json_encode(["error" => "Order nahi mila."]);
+                $stockQuery = "UPDATE products SET stock_count = stock_count + :qty WHERE id = :pid";
+                $stockStmt = $conn->prepare($stockQuery);
+                
+                foreach ($itemsToRestore as $itemToRestore) {
+                    $stockStmt->bindParam(':qty', $itemToRestore['quantity'], PDO::PARAM_INT);
+                    $stockStmt->bindParam(':pid', $itemToRestore['product_id'], PDO::PARAM_INT);
+                    $stockStmt->execute();
+                }
             }
+
+            $conn->commit();
+
+            // Updated order wapas fetch karna
+            $fetchQuery = "SELECT o.*, u.name as user_name, u.email as user_email FROM orders o 
+                          JOIN users u ON o.user_id = u.id WHERE o.id = :oid";
+            $fetchStmt = $conn->prepare($fetchQuery);
+            $fetchStmt->bindParam(':oid', $orderId, PDO::PARAM_INT);
+            $fetchStmt->execute();
+            $order = $fetchStmt->fetch(PDO::FETCH_ASSOC);
+
+            $itemsQuery = "SELECT * FROM order_items WHERE order_id = :oid";
+            $itemsStmt = $conn->prepare($itemsQuery);
+            $itemsStmt->bindParam(':oid', $orderId, PDO::PARAM_INT);
+            $itemsStmt->execute();
+            $items = $itemsStmt->fetchAll(PDO::FETCH_ASSOC);
+
+            echo json_encode(["success" => true, "message" => "Status updated.", "order" => formatOrder($order, $items)]);
             break;
 
         default:

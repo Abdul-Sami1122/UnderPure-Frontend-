@@ -13,6 +13,15 @@ async function apiCall(endpoint, options = {}) {
   const data = await res.json();
 
   if (!res.ok) {
+    // Auto-logout if token is invalid or expired
+    if (res.status === 401) {
+      import("../store/authStore").then(({ useAuthStore }) => {
+        useAuthStore.getState().logout();
+        if (window.location.pathname !== "/auth" && window.location.pathname !== "/") {
+            window.location.href = "/auth";
+        }
+      });
+    }
     throw new Error(data.error || `Request failed with status ${res.status}`);
   }
   return data;
