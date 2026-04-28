@@ -4,28 +4,28 @@ import { useSiteSettingsStore } from "../../store/siteSettingsStore";
 import { toast } from "sonner";
 
 const INPUT_CLS =
-  "w-full bg-[#0a0a0a] border border-[#d4a59a]/20 focus:border-[#d4a59a]/50 text-[#f5f0ee] text-xs font-['Montserrat'] px-3 py-2.5 outline-none transition-colors placeholder-[#9a8f8c]/50";
+  "w-full bg-[#1a1a1a] md:bg-[#0a0a0a] border border-[#d4a59a]/20 focus:border-[#d4a59a]/50 text-[#f5f0ee] text-sm md:text-xs font-['Montserrat'] px-4 py-3 md:px-3 md:py-2.5 outline-none transition-colors placeholder-[#9a8f8c]/50 rounded-sm md:rounded-none";
 const LABEL_CLS =
-  "block text-[9px] tracking-[0.2em] uppercase font-['Montserrat'] text-[#9a8f8c] mb-2";
+  "block text-[11px] md:text-[9px] tracking-[0.2em] uppercase font-['Montserrat'] text-[#9a8f8c] font-semibold md:font-normal mb-2 md:mb-2";
 
 function Field({ label, children, hint }) {
   return (
-    <div>
+    <div className="mb-5 md:mb-0">
       <label className={LABEL_CLS}>{label}</label>
       {children}
-      {hint && <p className="text-[9px] font-['Montserrat'] text-[#9a8f8c]/50 mt-1">{hint}</p>}
+      {hint && <p className="text-[10px] md:text-[9px] font-['Montserrat'] text-[#9a8f8c]/60 mt-2 md:mt-1">{hint}</p>}
     </div>
   );
 }
 
 function Section({ icon: Icon, title, children }) {
   return (
-    <div className="border border-[#d4a59a]/10 bg-[#0d0d0d] p-6 mb-4">
+    <div className="border border-[#d4a59a]/15 md:border-[#d4a59a]/10 bg-[#0d0d0d] p-5 md:p-6 mb-5 md:mb-4 rounded-sm md:rounded-none shadow-sm md:shadow-none">
       <div className="flex items-center gap-3 mb-5 pb-3 border-b border-[#d4a59a]/10">
-        <Icon size={15} strokeWidth={1.5} className="text-[#d4a59a]" />
-        <h2 className="font-['Cormorant_Garamond'] text-xl font-light text-[#f5f0ee]">{title}</h2>
+        <Icon size={18} md:size={15} strokeWidth={1.5} className="text-[#d4a59a]" />
+        <h2 className="font-['Cormorant_Garamond'] text-2xl md:text-xl font-medium md:font-light text-[#f5f0ee]">{title}</h2>
       </div>
-      <div className="space-y-4">{children}</div>
+      <div className="space-y-0 md:space-y-4">{children}</div>
     </div>
   );
 }
@@ -59,28 +59,30 @@ export function AdminSettings() {
   const handleReset = () => {
     settings.resetToDefaults();
     setDraft({
-      storeName: "Underpure",
-      storeEmail: "hello@underpure.com",
-      storePhone: "+44 20 7123 4567",
-      storeAddress: "12 Mayfair Row, London W1K 6AB, United Kingdom",
+      storeName: "S&S Kids Furniture",
+      storeEmail: "hello@snskids.com",
+      storePhone: "+92 300 123 4567",
+      storeAddress: "Lahore, Punjab, Pakistan",
       freeShippingThreshold: 150,
       instagramUrl: "#",
       facebookUrl: "#",
       twitterUrl: "#",
-      footerTagline: "Luxury lingerie and intimate apparel, crafted for the discerning woman. Beauty in every thread.",
+      footerTagline: "Luxury furniture crafted for kids. Beauty and safety in every piece.",
     });
     toast.success("Settings reset to defaults");
   };
 
   return (
-    <div className="p-6 md:p-8 max-w-2xl">
+    <div className="p-4 md:p-8 max-w-2xl mx-auto pb-32 md:pb-8 relative">
       {/* Header */}
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 md:mb-8 gap-4 md:gap-0">
         <div>
-          <h1 className="font-['Cormorant_Garamond'] text-3xl font-light text-[#f5f0ee]">Settings</h1>
-          <p className="text-[#9a8f8c] text-xs font-['Montserrat'] mt-1">Store configuration</p>
+          <h1 className="font-['Cormorant_Garamond'] text-4xl md:text-3xl font-medium md:font-light text-[#f5f0ee]">Settings</h1>
+          <p className="text-[#9a8f8c] text-sm md:text-xs font-['Montserrat'] mt-2 md:mt-1">Store configuration</p>
         </div>
-        <div className="flex gap-2">
+        
+        {/* Desktop Buttons */}
+        <div className="hidden md:flex gap-2">
           <button
             onClick={handleReset}
             className="flex items-center gap-2 px-4 py-2.5 border border-[#d4a59a]/20 text-[9px] tracking-[0.15em] uppercase font-['Montserrat'] text-[#9a8f8c] hover:text-[#f5f0ee] hover:border-[#d4a59a]/40 transition-colors"
@@ -90,10 +92,11 @@ export function AdminSettings() {
           </button>
           <button
             onClick={handleSave}
-            className={`flex items-center gap-2 px-5 py-2.5 text-[9px] tracking-[0.15em] uppercase font-['Montserrat'] font-semibold transition-colors ${saved
+            className={`flex items-center gap-2 px-5 py-2.5 text-[9px] tracking-[0.15em] uppercase font-['Montserrat'] font-semibold transition-colors ${
+              saved
                 ? "bg-green-500/20 text-green-400 border border-green-500/30"
                 : "bg-[#d4a59a] text-[#0a0a0a] hover:bg-[#f2c6b4]"
-              }`}
+            }`}
           >
             {saved ? <CheckCircle size={11} strokeWidth={1.5} /> : <Save size={11} strokeWidth={1.5} />}
             {saved ? "Saved!" : "Save"}
@@ -131,7 +134,7 @@ export function AdminSettings() {
 
       {/* Contact */}
       <Section icon={Mail} title="Contact Details">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4">
           <Field label="Email Address">
             <input
               type="email"
@@ -162,14 +165,14 @@ export function AdminSettings() {
             className={INPUT_CLS}
           />
         </Field>
-        <div className="border border-[#d4a59a]/10 p-4 bg-[#0a0a0a]">
-          <p className="text-[9px] font-['Montserrat'] text-[#9a8f8c]">
+        <div className="border border-[#d4a59a]/15 md:border-[#d4a59a]/10 p-4 md:p-4 bg-[#1a1a1a] md:bg-[#0a0a0a] rounded-sm md:rounded-none mt-2 md:mt-0">
+          <p className="text-xs md:text-[9px] font-['Montserrat'] font-semibold md:font-normal text-[#9a8f8c]">
             Current announcement bar shows:{" "}
-            <span className="text-[#d4a59a]">
+            <span className="text-[#d4a59a] block md:inline mt-1 md:mt-0">
               "Complimentary Shipping on Orders Over £{draft.freeShippingThreshold}"
             </span>
           </p>
-          <p className="text-[8px] font-['Montserrat'] text-[#9a8f8c]/50 mt-1">
+          <p className="text-[10px] md:text-[8px] font-['Montserrat'] text-[#9a8f8c]/60 md:text-[#9a8f8c]/50 mt-2 md:mt-1">
             Update the announcement bar text in Homepage Content to reflect threshold changes.
           </p>
         </div>
@@ -178,9 +181,9 @@ export function AdminSettings() {
       {/* Social Media */}
       <Section icon={Share2} title="Social Media Links">
         {[
-          { key: "instagramUrl", label: "Instagram URL", placeholder: "https://instagram.com/underpure" },
-          { key: "facebookUrl", label: "Facebook URL", placeholder: "https://facebook.com/underpure" },
-          { key: "twitterUrl", label: "X / Twitter URL", placeholder: "https://x.com/underpure" },
+          { key: "instagramUrl", label: "Instagram URL", placeholder: "https://instagram.com/" },
+          { key: "facebookUrl", label: "Facebook URL", placeholder: "https://facebook.com/" },
+          { key: "twitterUrl", label: "X / Twitter URL", placeholder: "https://x.com/" },
         ].map((field) => (
           <Field key={field.key} label={field.label}>
             <input
@@ -195,33 +198,55 @@ export function AdminSettings() {
       </Section>
 
       {/* Danger zone */}
-      <div className="border border-red-500/15 bg-red-500/3 p-6">
-        <h2 className="font-['Cormorant_Garamond'] text-xl font-light text-red-400 mb-4 pb-3 border-b border-red-500/15">
+      <div className="border border-red-500/20 md:border-red-500/15 bg-red-500/5 md:bg-red-500/3 p-5 md:p-6 rounded-sm md:rounded-none">
+        <h2 className="font-['Cormorant_Garamond'] text-2xl md:text-xl font-medium md:font-light text-red-400 mb-4 pb-3 border-b border-red-500/20 md:border-red-500/15">
           Danger Zone
         </h2>
-        <div className="space-y-3">
-          <div className="flex items-center justify-between">
+        <div className="space-y-5 md:space-y-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-0">
             <div>
-              <p className="text-xs font-['Montserrat'] text-[#f5f0ee]">Maintenance Mode</p>
-              <p className="text-[9px] font-['Montserrat'] text-[#9a8f8c]">Temporarily disable the storefront for customers</p>
+              <p className="text-sm md:text-xs font-['Montserrat'] font-semibold md:font-normal text-[#f5f0ee]">Maintenance Mode</p>
+              <p className="text-[11px] md:text-[9px] font-['Montserrat'] text-[#9a8f8c]">Temporarily disable the storefront for customers</p>
             </div>
-            <button className="px-4 py-2 border border-red-500/30 text-[9px] tracking-[0.15em] uppercase font-['Montserrat'] text-red-400 hover:bg-red-500/10 transition-colors">
+            <button className="px-5 py-3 md:px-4 md:py-2 border border-red-500/40 md:border-red-500/30 text-xs md:text-[9px] tracking-[0.15em] uppercase font-['Montserrat'] font-semibold md:font-normal text-red-400 hover:bg-red-500/10 transition-colors rounded-sm md:rounded-none">
               Enable
             </button>
           </div>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-0 pt-3 md:pt-0 border-t border-red-500/10 md:border-none">
             <div>
-              <p className="text-xs font-['Montserrat'] text-[#f5f0ee]">Clear All Data</p>
-              <p className="text-[9px] font-['Montserrat'] text-[#9a8f8c]">Reset all settings to factory defaults</p>
+              <p className="text-sm md:text-xs font-['Montserrat'] font-semibold md:font-normal text-[#f5f0ee]">Clear All Data</p>
+              <p className="text-[11px] md:text-[9px] font-['Montserrat'] text-[#9a8f8c]">Reset all settings to factory defaults</p>
             </div>
             <button
               onClick={handleReset}
-              className="px-4 py-2 border border-red-500/30 text-[9px] tracking-[0.15em] uppercase font-['Montserrat'] text-red-400 hover:bg-red-500/10 transition-colors"
+              className="px-5 py-3 md:px-4 md:py-2 border border-red-500/40 md:border-red-500/30 text-xs md:text-[9px] tracking-[0.15em] uppercase font-['Montserrat'] font-semibold md:font-normal text-red-400 hover:bg-red-500/10 transition-colors rounded-sm md:rounded-none"
             >
               Reset All
             </button>
           </div>
         </div>
+      </div>
+
+      {/* Mobile Sticky Bottom Bar */}
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-[#111]/95 backdrop-blur-md border-t border-[#d4a59a]/15 flex gap-3 z-40 md:hidden">
+        <button
+          onClick={handleReset}
+          className="flex-1 flex items-center justify-center gap-2 px-4 py-4 bg-[#1a1a1a] border border-[#d4a59a]/20 text-[11px] tracking-[0.15em] uppercase font-['Montserrat'] font-semibold text-[#f5f0ee] rounded-sm"
+        >
+          <RotateCcw size={14} strokeWidth={1.5} />
+          Reset
+        </button>
+        <button
+          onClick={handleSave}
+          className={`flex-1 flex items-center justify-center gap-2 px-4 py-4 text-[11px] tracking-[0.15em] uppercase font-['Montserrat'] font-bold rounded-sm shadow-lg transition-colors ${
+            saved
+              ? "bg-green-500 text-[#0a0a0a]"
+              : "bg-[#d4a59a] text-[#0a0a0a]"
+          }`}
+        >
+          {saved ? <CheckCircle size={14} strokeWidth={1.5} /> : <Save size={14} strokeWidth={1.5} />}
+          {saved ? "Saved!" : "Save"}
+        </button>
       </div>
     </div>
   );

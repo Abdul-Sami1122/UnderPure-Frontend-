@@ -58,7 +58,7 @@ export function AuthPage() {
       } else {
         const { user, token } = await register(form.email, form.password, form.name);
         storeLogin(user, token);
-        toast.success(`Welcome to Velour, ${user.name} ✦`);
+        toast.success(`Welcome to UNDERPURE, ${user.name} ✦`);
         navigate("/account", { replace: true });
       }
     } catch (err) {
@@ -70,41 +70,41 @@ export function AuthPage() {
 
   return (
     <div className="bg-[#0a0a0a] min-h-screen flex">
-      {/* Left — decorative */}
+      {/* Left — decorative (Hidden on Mobile) */}
       <div className="hidden lg:block lg:w-1/2 relative overflow-hidden">
         <img
           src="https://images.unsplash.com/photo-1770294759013-a5784266a817?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1200&q=80"
-          alt="Velour collection"
+          alt="Luxury collection"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a]/20 to-[#0a0a0a]/60" />
         <div className="absolute bottom-12 left-12 right-12">
           <p className="font-['Cormorant_Garamond'] text-3xl font-light text-[#f5f0ee] italic leading-snug">
-            "Beauty is the first test: there is no permanent place in the world for ugly mathematics."
+            "Design is the silent ambassador of your brand."
           </p>
           <p className="text-[#d4a59a] text-xs tracking-[0.2em] uppercase font-['Montserrat'] mt-4">
-            G. H. Hardy
+            Paul Rand
           </p>
         </div>
       </div>
 
       {/* Right — form */}
-      <div className="flex-1 flex items-center justify-center px-6 py-16">
+      <div className="flex-1 flex items-center justify-center px-6 py-12 md:py-16">
         <div className="w-full max-w-md">
           <Link
             to="/"
-            className="font-['Cormorant_Garamond'] text-3xl font-light tracking-[0.3em] uppercase text-[#f5f0ee] block text-center mb-12 hover:text-[#d4a59a] transition-colors"
+            className="font-['Cormorant_Garamond'] text-4xl md:text-3xl font-medium md:font-light tracking-[0.25em] uppercase text-[#f5f0ee] block text-center mb-10 md:mb-12 hover:text-[#d4a59a] transition-colors"
           >
-            Velour
+            UNDERPURE
           </Link>
 
           {/* Mode toggle */}
-          <div className="flex border-b border-[#d4a59a]/15 mb-10">
+          <div className="flex border-b border-[#d4a59a]/15 mb-8 md:mb-10">
             {["login", "register"].map((m) => (
               <button
                 key={m}
                 onClick={() => setMode(m)}
-                className={`flex-1 pb-3 text-xs tracking-[0.2em] uppercase font-['Montserrat'] transition-colors ${
+                className={`flex-1 pb-3 text-xs md:text-[10px] tracking-[0.2em] uppercase font-['Montserrat'] transition-colors font-semibold md:font-normal ${
                   mode === m
                     ? "text-[#d4a59a] border-b-2 border-[#d4a59a] -mb-px"
                     : "text-[#9a8f8c] hover:text-[#f5f0ee]"
@@ -123,11 +123,11 @@ export function AuthPage() {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.25 }}
               onSubmit={handleSubmit}
-              className="space-y-5"
+              className="space-y-5 md:space-y-4"
             >
               {mode === "register" && (
                 <div>
-                  <label className="block text-[10px] tracking-[0.2em] uppercase font-['Montserrat'] text-[#9a8f8c] mb-2">
+                  <label className="block text-[11px] md:text-[9px] tracking-[0.2em] uppercase font-['Montserrat'] font-semibold md:font-normal text-[#9a8f8c] mb-2">
                     Full Name
                   </label>
                   <input
@@ -135,13 +135,13 @@ export function AuthPage() {
                     value={form.name}
                     onChange={(e) => setField("name", e.target.value)}
                     placeholder="Your name"
-                    className="w-full bg-[#111] border border-[#d4a59a]/20 focus:border-[#d4a59a]/60 text-[#f5f0ee] text-sm font-['Montserrat'] px-4 py-3.5 outline-none placeholder-[#9a8f8c]/50 transition-colors"
+                    className="w-full bg-[#111] border border-[#d4a59a]/20 focus:border-[#d4a59a]/60 text-[#f5f0ee] text-sm md:text-xs font-['Montserrat'] px-4 py-4 md:px-3 md:py-3 outline-none placeholder-[#9a8f8c]/50 transition-colors rounded-sm"
                   />
                 </div>
               )}
 
               <div>
-                <label className="block text-[10px] tracking-[0.2em] uppercase font-['Montserrat'] text-[#9a8f8c] mb-2">
+                <label className="block text-[11px] md:text-[9px] tracking-[0.2em] uppercase font-['Montserrat'] font-semibold md:font-normal text-[#9a8f8c] mb-2">
                   Email Address
                 </label>
                 <input
@@ -149,12 +149,12 @@ export function AuthPage() {
                   value={form.email}
                   onChange={(e) => setField("email", e.target.value)}
                   placeholder="your@email.com"
-                  className="w-full bg-[#111] border border-[#d4a59a]/20 focus:border-[#d4a59a]/60 text-[#f5f0ee] text-sm font-['Montserrat'] px-4 py-3.5 outline-none placeholder-[#9a8f8c]/50 transition-colors"
+                  className="w-full bg-[#111] border border-[#d4a59a]/20 focus:border-[#d4a59a]/60 text-[#f5f0ee] text-sm md:text-xs font-['Montserrat'] px-4 py-4 md:px-3 md:py-3 outline-none placeholder-[#9a8f8c]/50 transition-colors rounded-sm"
                 />
               </div>
 
               <div>
-                <label className="block text-[10px] tracking-[0.2em] uppercase font-['Montserrat'] text-[#9a8f8c] mb-2">
+                <label className="block text-[11px] md:text-[9px] tracking-[0.2em] uppercase font-['Montserrat'] font-semibold md:font-normal text-[#9a8f8c] mb-2">
                   Password
                 </label>
                 <div className="relative">
@@ -163,14 +163,14 @@ export function AuthPage() {
                     value={form.password}
                     onChange={(e) => setField("password", e.target.value)}
                     placeholder="••••••••"
-                    className="w-full bg-[#111] border border-[#d4a59a]/20 focus:border-[#d4a59a]/60 text-[#f5f0ee] text-sm font-['Montserrat'] px-4 py-3.5 pr-12 outline-none placeholder-[#9a8f8c]/50 transition-colors"
+                    className="w-full bg-[#111] border border-[#d4a59a]/20 focus:border-[#d4a59a]/60 text-[#f5f0ee] text-sm md:text-xs font-['Montserrat'] px-4 py-4 md:px-3 md:py-3 pr-12 outline-none placeholder-[#9a8f8c]/50 transition-colors rounded-sm"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPass(!showPass)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-[#9a8f8c] hover:text-[#d4a59a] transition-colors"
+                    className="absolute right-4 md:right-3 top-1/2 -translate-y-1/2 text-[#9a8f8c] hover:text-[#d4a59a] transition-colors p-2 md:p-1"
                   >
-                    {showPass ? <EyeOff size={15} strokeWidth={1.5} /> : <Eye size={15} strokeWidth={1.5} />}
+                    {showPass ? <EyeOff size={18} md:size={15} strokeWidth={1.5} /> : <Eye size={18} md:size={15} strokeWidth={1.5} />}
                   </button>
                 </div>
               </div>
@@ -179,7 +179,7 @@ export function AuthPage() {
                 <div className="text-right">
                   <button
                     type="button"
-                    className="text-[10px] tracking-[0.1em] uppercase font-['Montserrat'] text-[#9a8f8c] hover:text-[#d4a59a] transition-colors"
+                    className="text-xs md:text-[10px] tracking-[0.1em] font-['Montserrat'] font-semibold md:font-normal text-[#9a8f8c] hover:text-[#d4a59a] transition-colors"
                   >
                     Forgot password?
                   </button>
@@ -189,40 +189,35 @@ export function AuthPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex items-center justify-center gap-3 bg-[#d4a59a] text-[#0a0a0a] py-4 text-xs tracking-[0.25em] uppercase font-['Montserrat'] font-semibold hover:bg-[#f2c6b4] disabled:opacity-60 transition-colors mt-2"
+                className="w-full flex items-center justify-center gap-3 bg-[#d4a59a] text-[#0a0a0a] py-4 md:py-3.5 text-xs md:text-[10px] tracking-[0.25em] md:tracking-[0.2em] uppercase font-['Montserrat'] font-bold hover:bg-[#f2c6b4] disabled:opacity-60 transition-colors mt-4 md:mt-2 rounded-sm shadow-md md:shadow-none"
               >
                 {loading ? (
                   <span>Please wait…</span>
                 ) : (
                   <>
                     {mode === "login" ? "Sign In" : "Create Account"}
-                    <ArrowRight size={14} />
+                    <ArrowRight size={16} md:size={14} />
                   </>
                 )}
               </button>
 
               {mode === "register" && (
-                <p className="text-[9px] text-[#9a8f8c]/60 font-['Montserrat'] text-center leading-relaxed">
+                <p className="text-[10px] md:text-[9px] text-[#9a8f8c]/60 font-['Montserrat'] text-center leading-relaxed pt-2 md:pt-0">
                   By creating an account you agree to our{" "}
-                  <a href="#" className="underline hover:text-[#d4a59a] transition-colors">
-                    Terms of Service
-                  </a>{" "}
-                  and{" "}
-                  <a href="#" className="underline hover:text-[#d4a59a] transition-colors">
-                    Privacy Policy
-                  </a>
-                  .
+                  <a href="#" className="underline hover:text-[#d4a59a] transition-colors">Terms of Service</a>
+                  {" "}and{" "}
+                  <a href="#" className="underline hover:text-[#d4a59a] transition-colors">Privacy Policy</a>.
                 </p>
               )}
             </motion.form>
           </AnimatePresence>
 
-          <div className="mt-10 text-center">
-            <p className="text-xs text-[#9a8f8c] font-['Montserrat']">
-              {mode === "login" ? "New to Velour?" : "Already a member?"}{" "}
+          <div className="mt-10 md:mt-8 text-center">
+            <p className="text-xs md:text-[11px] text-[#9a8f8c] font-['Montserrat']">
+              {mode === "login" ? "New to UNDERPURE?" : "Already a member?"}{" "}
               <button
                 onClick={() => setMode(mode === "login" ? "register" : "login")}
-                className="text-[#d4a59a] hover:text-[#f2c6b4] transition-colors"
+                className="text-[#d4a59a] font-semibold md:font-medium hover:text-[#f2c6b4] transition-colors ml-1"
               >
                 {mode === "login" ? "Create an account" : "Sign in"}
               </button>

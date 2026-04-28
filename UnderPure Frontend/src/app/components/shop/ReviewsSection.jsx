@@ -21,7 +21,7 @@ function generateReviews(product) {
       location: "Paris, France",
       rating: 5,
       title: "The quality is unreal",
-      body: "I bought this as a gift for myself and I have zero regrets. Velour's packaging alone makes you feel like royalty.",
+      body: "I bought this as a gift for myself and I have zero regrets. S&S Kids packaging alone makes you feel like royalty.",
       date: "2026-02-28",
       helpful: 18,
       verified: true,
@@ -43,11 +43,11 @@ function generateReviews(product) {
 
 function StarRow({ rating, max = 5 }) {
   return (
-    <div className="flex gap-0.5">
+    <div className="flex gap-1">
       {Array.from({ length: max }).map((_, i) => (
         <Star
           key={i}
-          size={10}
+          size={14}
           className={i < rating ? "text-[#d4a59a] fill-[#d4a59a]" : "text-[#3a3a3a]"}
           strokeWidth={1}
         />
@@ -58,12 +58,12 @@ function StarRow({ rating, max = 5 }) {
 
 function RatingBar({ label, percent }) {
   return (
-    <div className="flex items-center gap-3">
-      <span className="text-[9px] font-['Montserrat'] text-[#9a8f8c] w-4">{label}</span>
-      <div className="flex-1 h-1 bg-[#1a1a1a] overflow-hidden">
-        <div className="h-full bg-[#d4a59a]" style={{ width: `${percent}%` }} />
+    <div className="flex items-center gap-4">
+      <span className="text-xs font-['Montserrat'] text-[#9a8f8c] w-6">{label}</span>
+      <div className="flex-1 h-1.5 bg-[#1a1a1a] overflow-hidden rounded-full">
+        <div className="h-full bg-[#d4a59a] rounded-full" style={{ width: `${percent}%` }} />
       </div>
-      <span className="text-[9px] font-['Montserrat'] text-[#9a8f8c] w-6 text-right">{percent}%</span>
+      <span className="text-xs font-['Montserrat'] text-[#9a8f8c] w-8 text-right">{percent}%</span>
     </div>
   );
 }
@@ -85,27 +85,32 @@ export function ReviewsSection({ product }) {
   const displayedReviews = showAll ? reviews : reviews.slice(0, 3);
 
   return (
-    <section className="border-t border-[#d4a59a]/10 pt-12 sm:pt-16 mt-8">
-      <div className="grid grid-cols-1 md:grid-cols-[260px_1fr] gap-10 md:gap-12">
-        <div className="bg-[#0d0d0d] p-6 border border-[#d4a59a]/5 rounded-sm">
-          <h2 className="font-['Cormorant_Garamond'] text-2xl font-light text-[#f5f0ee] mb-6">Reviews</h2>
-          <div className="mb-6">
-            <p className="font-['Cormorant_Garamond'] text-5xl sm:text-6xl font-light text-[#f5f0ee] leading-none mb-2">
+    <section className="border-t border-[#d4a59a]/15 pt-14 md:pt-16 mt-12 bg-[#0d0d0d] md:bg-transparent -mx-4 px-4 md:mx-0 md:px-0">
+      <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-10 md:gap-14">
+        
+        {/* Rating Summary Card */}
+        <div className="bg-[#111] md:bg-[#0d0d0d] p-6 md:p-8 border border-[#d4a59a]/10 md:border-[#d4a59a]/5 rounded-sm shadow-sm md:shadow-none">
+          <h2 className="font-['Cormorant_Garamond'] text-3xl font-medium text-[#f5f0ee] mb-6 border-b border-[#d4a59a]/10 pb-4">
+            Reviews
+          </h2>
+          <div className="mb-8">
+            <p className="font-['Cormorant_Garamond'] text-6xl md:text-6xl font-light text-[#f5f0ee] leading-none mb-3">
               {product.rating ? product.rating.toFixed(1) : "0.0"}
             </p>
             <StarRow rating={Math.round(product.rating || 0)} />
-            <p className="text-[10px] text-[#9a8f8c] font-['Montserrat'] mt-3 uppercase tracking-wider">
+            <p className="text-[10px] md:text-[10px] text-[#9a8f8c] font-['Montserrat'] font-bold mt-4 uppercase tracking-widest">
               Based on {product.reviewCount || 0} reviews
             </p>
           </div>
-          <div className="space-y-2">
+          <div className="space-y-3">
             {[5, 4, 3, 2, 1].map((star) => (
               <RatingBar key={star} label={`${star}★`} percent={star === 5 ? 85 : star === 4 ? 10 : 5} />
             ))}
           </div>
         </div>
 
-        <div className="space-y-8">
+        {/* Reviews List */}
+        <div className="space-y-8 md:space-y-10">
           {displayedReviews.map((review, i) => (
             <div key={review.id} className="border-b border-[#d4a59a]/10 pb-8 last:border-0">
               <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
@@ -113,22 +118,29 @@ export function ReviewsSection({ product }) {
                   <div className="flex items-center gap-3 mb-2">
                     <StarRow rating={review.rating} />
                     {review.verified && (
-                      <span className="text-[8px] tracking-[0.1em] uppercase font-['Montserrat'] text-green-400/70 border border-green-400/20 px-1.5 py-0.5">Verified</span>
+                      <span className="text-[9px] tracking-[0.15em] uppercase font-['Montserrat'] font-bold text-green-400/80 border border-green-400/20 px-2 py-1 rounded-sm bg-green-400/5">
+                        Verified
+                      </span>
                     )}
                   </div>
-                  <p className="font-['Cormorant_Garamond'] text-lg font-medium text-[#f5f0ee]">{review.title}</p>
+                  <p className="font-['Cormorant_Garamond'] text-xl md:text-2xl font-medium text-[#f5f0ee] mt-3">
+                    {review.title}
+                  </p>
                 </div>
-                <div className="sm:text-right">
-                  <p className="text-[10px] font-semibold font-['Montserrat'] text-[#f5f0ee]">{review.author}</p>
-                  <p className="text-[9px] font-['Montserrat'] text-[#9a8f8c]">{review.location} · {review.date}</p>
+                <div className="sm:text-right flex flex-row sm:flex-col items-center sm:items-end gap-2 sm:gap-1">
+                  <p className="text-xs font-semibold font-['Montserrat'] text-[#f5f0ee]">{review.author}</p>
+                  <span className="text-xs text-[#9a8f8c] hidden sm:inline">·</span>
+                  <p className="text-[10px] font-['Montserrat'] text-[#9a8f8c]">{review.location} · {review.date}</p>
                 </div>
               </div>
-              <p className="text-xs sm:text-sm text-[#9a8f8c] font-['Montserrat'] leading-relaxed mb-5">{review.body}</p>
+              <p className="text-sm text-[#9a8f8c] font-['Montserrat'] leading-loose mb-6">
+                {review.body}
+              </p>
               <button
                 onClick={() => markHelpful(review.id)}
-                className={`flex items-center gap-1.5 text-[9px] tracking-[0.1em] uppercase font-['Montserrat'] transition-colors ${helpfulIds.has(review.id) ? "text-[#d4a59a]" : "text-[#9a8f8c] hover:text-[#f5f0ee]"}`}
+                className={`flex items-center gap-2 text-[10px] tracking-[0.15em] uppercase font-['Montserrat'] font-bold transition-colors py-2 px-3 rounded-sm border ${helpfulIds.has(review.id) ? "text-[#d4a59a] border-[#d4a59a]/30 bg-[#d4a59a]/5" : "text-[#9a8f8c] border-[#9a8f8c]/20 hover:text-[#f5f0ee] hover:border-[#f5f0ee]/40 bg-[#111]"}`}
               >
-                <ThumbsUp size={11} /> Helpful ({review.helpful + (helpfulIds.has(review.id) ? 1 : 0)})
+                <ThumbsUp size={14} /> Helpful ({review.helpful + (helpfulIds.has(review.id) ? 1 : 0)})
               </button>
             </div>
           ))}

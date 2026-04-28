@@ -185,9 +185,9 @@ const STATUS_COLORS = {
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-[#111] border border-[#d4a59a]/20 px-4 py-3 text-xs font-['Montserrat']">
+      <div className="bg-[#111] border border-[#d4a59a]/20 px-4 py-3 text-sm md:text-xs font-['Montserrat'] shadow-xl">
         <p className="text-[#9a8f8c] mb-1">{label}</p>
-        <p className="text-[#d4a59a] font-semibold">
+        <p className="text-[#d4a59a] font-semibold text-lg md:text-sm">
           £{payload[0]?.value?.toLocaleString()}
         </p>
         <p className="text-[#f5f0ee]">{payload[1]?.value} orders</p>
@@ -267,13 +267,13 @@ export function AdminDashboard() {
   ];
 
   return (
-    <div className="p-6 md:p-8 max-w-[1400px]">
+    <div className="p-4 md:p-6 lg:p-8 max-w-[1400px]">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="font-['Cormorant_Garamond'] text-3xl font-light text-[#f5f0ee]">
+      <div className="mb-6 md:mb-8">
+        <h1 className="font-['Cormorant_Garamond'] text-4xl md:text-3xl font-medium md:font-light text-[#f5f0ee]">
           Dashboard
         </h1>
-        <p className="text-[#9a8f8c] text-xs font-['Montserrat'] mt-1">
+        <p className="text-[#9a8f8c] text-sm md:text-xs font-['Montserrat'] mt-2 md:mt-1">
           {new Date().toLocaleDateString("en-GB", {
             weekday: "long",
             day: "numeric",
@@ -284,42 +284,44 @@ export function AdminDashboard() {
         </p>
       </div>
 
-      {/* Stat Cards */}
+      {/* Stat Cards - Responsive Grid */}
       {loading ? (
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
           {[...Array(5)].map((_, i) => (
-            <div key={i} className="h-28 bg-[#141414] animate-pulse" />
+            <div key={i} className="h-32 md:h-28 bg-[#141414] animate-pulse rounded-sm" />
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
           {STAT_CARDS.map((card) => (
             <Link
               key={card.label}
               to={card.link}
-              className="border border-[#d4a59a]/10 p-4 hover:border-[#d4a59a]/25 transition-all group bg-[#0d0d0d]"
+              className="border border-[#d4a59a]/15 md:border-[#d4a59a]/10 p-5 md:p-4 hover:border-[#d4a59a]/40 md:hover:border-[#d4a59a]/25 transition-all group bg-[#0d0d0d] rounded-sm md:rounded-none shadow-sm md:shadow-none"
             >
-              <div className="flex items-center justify-between mb-3">
-                <card.icon size={15} strokeWidth={1.5} className={card.color} />
+              <div className="flex items-center justify-between mb-4 md:mb-3">
+                <card.icon size={20} md:size={15} strokeWidth={1.5} className={card.color} />
                 <ArrowRight
-                  size={11}
-                  className="text-[#9a8f8c]/30 group-hover:text-[#d4a59a] transition-colors"
+                  size={16} md:size={11}
+                  className="text-[#9a8f8c]/40 group-hover:text-[#d4a59a] transition-colors"
                 />
               </div>
-              <p className="font-['Cormorant_Garamond'] text-2xl font-light text-[#f5f0ee] mb-1">
+              <p className="font-['Cormorant_Garamond'] text-4xl md:text-2xl font-medium md:font-light text-[#f5f0ee] mb-1">
                 {card.value}
               </p>
-              <p className="text-[8px] tracking-[0.18em] uppercase font-['Montserrat'] text-[#9a8f8c] mb-2">
+              <p className="text-xs md:text-[8px] tracking-[0.2em] md:tracking-[0.18em] uppercase font-['Montserrat'] text-[#9a8f8c] mb-3 md:mb-2 font-semibold md:font-normal">
                 {card.label}
               </p>
               {card.change !== null && (
                 <div
-                  className={`flex items-center gap-1 text-[9px] font-['Montserrat'] ${card.change >= 0 ? "text-green-400" : "text-red-400"}`}
+                  className={`flex items-center gap-1 text-[11px] md:text-[9px] font-['Montserrat'] font-medium ${
+                    card.change >= 0 ? "text-green-400" : "text-red-400"
+                  }`}
                 >
                   {card.change >= 0 ? (
-                    <ArrowUpRight size={10} />
+                    <ArrowUpRight size={14} md:size={10} />
                   ) : (
-                    <ArrowDownRight size={10} />
+                    <ArrowDownRight size={14} md:size={10} />
                   )}
                   {Math.abs(card.change)}% vs last month
                 </div>
@@ -330,60 +332,46 @@ export function AdminDashboard() {
       )}
 
       {/* Charts Row */}
-      <div className="grid lg:grid-cols-3 gap-4 mb-8">
-        {/* Revenue Chart — takes 2/3 width */}
-        <div className="lg:col-span-2 border border-[#d4a59a]/10 bg-[#0d0d0d] p-5">
-          <div className="flex items-center justify-between mb-5">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-4 mb-8">
+        {/* Revenue Chart */}
+        <div className="lg:col-span-2 border border-[#d4a59a]/15 md:border-[#d4a59a]/10 bg-[#0d0d0d] p-5 md:p-5 rounded-sm">
+          <div className="flex items-center justify-between mb-6 md:mb-5">
             <div>
-              <p className="text-xs tracking-[0.18em] uppercase font-['Montserrat'] text-[#f5f0ee]">
+              <p className="text-sm md:text-xs tracking-[0.2em] md:tracking-[0.18em] uppercase font-['Montserrat'] font-semibold md:font-normal text-[#f5f0ee]">
                 Revenue Overview
               </p>
-              <p className="text-[9px] font-['Montserrat'] text-[#9a8f8c] mt-0.5">
+              <p className="text-xs md:text-[9px] font-['Montserrat'] text-[#9a8f8c] mt-1 md:mt-0.5">
                 Last 12 weeks
               </p>
             </div>
             <Link
               to="/admin/analytics"
-              className="text-[9px] tracking-[0.15em] uppercase font-['Montserrat'] text-[#9a8f8c] hover:text-[#d4a59a] transition-colors flex items-center gap-1"
+              className="text-xs md:text-[9px] tracking-[0.15em] uppercase font-['Montserrat'] text-[#9a8f8c] hover:text-[#d4a59a] transition-colors flex items-center gap-1 font-semibold"
             >
-              Full Report <ArrowRight size={10} />
+              Full Report <ArrowRight size={14} md:size={10} />
             </Link>
           </div>
-          <ResponsiveContainer width="100%" height={220}>
+          <ResponsiveContainer width="100%" height={250}>
             <AreaChart
               data={MOCK_REVENUE}
-              margin={{ top: 0, right: 0, left: -20, bottom: 0 }}
+              margin={{ top: 0, right: 0, left: -10, bottom: 0 }}
             >
               <defs>
-                <linearGradient
-                  id="adminDashboardRevenueGradient"
-                  x1="0"
-                  y1="0"
-                  x2="0"
-                  y2="1"
-                >
+                <linearGradient id="adminDashboardRevenueGradient" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#d4a59a" stopOpacity={0.25} />
                   <stop offset="95%" stopColor="#d4a59a" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#d4a59a10" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#d4a59a10" vertical={false} />
               <XAxis
                 dataKey="week"
-                tick={{
-                  fill: "#9a8f8c",
-                  fontSize: 9,
-                  fontFamily: "Montserrat",
-                }}
+                tick={{ fill: "#9a8f8c", fontSize: 10, fontFamily: "Montserrat" }}
                 axisLine={false}
                 tickLine={false}
-                interval={2}
+                interval={window.innerWidth < 768 ? 3 : 2}
               />
               <YAxis
-                tick={{
-                  fill: "#9a8f8c",
-                  fontSize: 9,
-                  fontFamily: "Montserrat",
-                }}
+                tick={{ fill: "#9a8f8c", fontSize: 10, fontFamily: "Montserrat" }}
                 axisLine={false}
                 tickLine={false}
                 tickFormatter={(v) => `£${(v / 1000).toFixed(0)}k`}
@@ -393,7 +381,7 @@ export function AdminDashboard() {
                 type="monotone"
                 dataKey="revenue"
                 stroke="#d4a59a"
-                strokeWidth={1.5}
+                strokeWidth={2}
                 fill="url(#adminDashboardRevenueGradient)"
               />
             </AreaChart>
@@ -401,58 +389,53 @@ export function AdminDashboard() {
         </div>
 
         {/* Orders by Status Pie */}
-        <div className="border border-[#d4a59a]/10 bg-[#0d0d0d] p-5">
-          <p className="text-xs tracking-[0.18em] uppercase font-['Montserrat'] text-[#f5f0ee] mb-1">
+        <div className="border border-[#d4a59a]/15 md:border-[#d4a59a]/10 bg-[#0d0d0d] p-5 md:p-5 rounded-sm">
+          <p className="text-sm md:text-xs tracking-[0.2em] md:tracking-[0.18em] uppercase font-['Montserrat'] font-semibold md:font-normal text-[#f5f0ee] mb-1">
             Orders by Status
           </p>
-          <p className="text-[9px] font-['Montserrat'] text-[#9a8f8c] mb-5">
+          <p className="text-xs md:text-[9px] font-['Montserrat'] text-[#9a8f8c] mb-6 md:mb-5">
             All time
           </p>
-          <ResponsiveContainer width="100%" height={160}>
+          <ResponsiveContainer width="100%" height={180}>
             <PieChart>
               <Pie
                 data={MOCK_STATUS}
                 cx="50%"
                 cy="50%"
-                innerRadius={45}
-                outerRadius={70}
+                innerRadius={55}
+                outerRadius={85}
                 paddingAngle={2}
                 dataKey="value"
               >
                 {MOCK_STATUS.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={entry.color}
-                    opacity={0.85}
-                  />
+                  <Cell key={`cell-${index}`} fill={entry.color} opacity={0.85} />
                 ))}
               </Pie>
               <Tooltip
                 contentStyle={{
                   background: "#111",
                   border: "1px solid rgba(212,165,154,0.2)",
-                  borderRadius: 0,
                   fontFamily: "Montserrat",
-                  fontSize: 10,
+                  fontSize: 12,
                   color: "#f5f0ee",
                 }}
                 formatter={(value) => [`${value}%`, ""]}
               />
             </PieChart>
           </ResponsiveContainer>
-          <div className="space-y-1.5 mt-2">
+          <div className="space-y-2.5 md:space-y-1.5 mt-4 md:mt-2">
             {MOCK_STATUS.map((s) => (
               <div key={s.name} className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 md:gap-2">
                   <div
-                    className="w-2 h-2 rounded-full flex-shrink-0"
+                    className="w-3 h-3 md:w-2 md:h-2 rounded-full flex-shrink-0"
                     style={{ background: s.color }}
                   />
-                  <span className="text-[9px] font-['Montserrat'] text-[#9a8f8c]">
+                  <span className="text-xs md:text-[9px] font-['Montserrat'] text-[#9a8f8c] font-medium md:font-normal">
                     {s.name}
                   </span>
                 </div>
-                <span className="text-[9px] font-['Montserrat'] text-[#f5f0ee]">
+                <span className="text-xs md:text-[9px] font-['Montserrat'] text-[#f5f0ee] font-semibold md:font-normal">
                   {s.value}%
                 </span>
               </div>
@@ -461,43 +444,46 @@ export function AdminDashboard() {
         </div>
       </div>
 
-      {/* Recent Orders + Low stock */}
-      <div className="grid lg:grid-cols-3 gap-4">
+      {/* Recent Orders + Alerts Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-4">
+        
         {/* Recent orders */}
-        <div className="lg:col-span-2 border border-[#d4a59a]/10 bg-[#0d0d0d]">
-          <div className="flex items-center justify-between px-5 py-4 border-b border-[#d4a59a]/10">
-            <p className="text-xs tracking-[0.18em] uppercase font-['Montserrat'] text-[#f5f0ee]">
+        <div className="lg:col-span-2 border border-[#d4a59a]/15 md:border-[#d4a59a]/10 bg-[#0d0d0d] rounded-sm">
+          <div className="flex items-center justify-between px-5 py-5 md:py-4 border-b border-[#d4a59a]/10">
+            <p className="text-sm md:text-xs tracking-[0.2em] md:tracking-[0.18em] uppercase font-['Montserrat'] font-semibold md:font-normal text-[#f5f0ee]">
               Recent Orders
             </p>
             <Link
               to="/admin/orders"
-              className="text-[9px] tracking-[0.15em] uppercase font-['Montserrat'] text-[#9a8f8c] hover:text-[#d4a59a] transition-colors flex items-center gap-1"
+              className="text-xs md:text-[9px] tracking-[0.15em] uppercase font-['Montserrat'] text-[#9a8f8c] hover:text-[#d4a59a] font-semibold md:font-normal transition-colors flex items-center gap-1"
             >
-              View All <ArrowRight size={10} />
+              View All <ArrowRight size={14} md:size={10} />
             </Link>
           </div>
           <div className="divide-y divide-[#d4a59a]/10">
             {recentOrders.map((order) => (
               <div
                 key={order.id}
-                className="flex items-center justify-between px-5 py-3.5 hover:bg-[#f5f0ee]/2 transition-colors"
+                className="flex flex-col sm:flex-row sm:items-center justify-between px-5 py-4 hover:bg-[#f5f0ee]/5 md:hover:bg-[#f5f0ee]/2 transition-colors gap-3 sm:gap-0"
               >
                 <div>
-                  <p className="text-xs font-['Montserrat'] text-[#f5f0ee] font-medium">
+                  <p className="text-sm md:text-xs font-['Montserrat'] text-[#f5f0ee] font-semibold md:font-medium">
                     #{order.id.slice(-8).toUpperCase()}
                   </p>
-                  <p className="text-[9px] text-[#9a8f8c] font-['Montserrat']">
+                  <p className="text-xs md:text-[9px] text-[#9a8f8c] font-['Montserrat'] mt-1 md:mt-0">
                     {order.userEmail} ·{" "}
                     {new Date(order.createdAt).toLocaleDateString("en-GB")}
                   </p>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center justify-between sm:justify-end gap-4 w-full sm:w-auto mt-2 sm:mt-0">
                   <span
-                    className={`text-[8px] tracking-[0.12em] uppercase font-['Montserrat'] font-semibold px-2 py-1 ${STATUS_COLORS[order.status] || STATUS_COLORS.pending}`}
+                    className={`text-[10px] md:text-[8px] tracking-[0.15em] md:tracking-[0.12em] uppercase font-['Montserrat'] font-bold md:font-semibold px-2.5 py-1.5 md:px-2 md:py-1 rounded-sm md:rounded-none ${
+                      STATUS_COLORS[order.status] || STATUS_COLORS.pending
+                    }`}
                   >
                     {order.status}
                   </span>
-                  <span className="text-xs font-['Montserrat'] text-[#f5f0ee]">
+                  <span className="text-sm md:text-xs font-['Montserrat'] text-[#f5f0ee] font-semibold md:font-normal">
                     £{order.total.toFixed(2)}
                   </span>
                 </div>
@@ -506,14 +492,14 @@ export function AdminDashboard() {
           </div>
         </div>
 
-        {/* Alerts */}
-        <div className="border border-[#d4a59a]/10 bg-[#0d0d0d]">
-          <div className="px-5 py-4 border-b border-[#d4a59a]/10">
-            <p className="text-xs tracking-[0.18em] uppercase font-['Montserrat'] text-[#f5f0ee]">
+        {/* Alerts & Actions */}
+        <div className="border border-[#d4a59a]/15 md:border-[#d4a59a]/10 bg-[#0d0d0d] rounded-sm">
+          <div className="px-5 py-5 md:py-4 border-b border-[#d4a59a]/10">
+            <p className="text-sm md:text-xs tracking-[0.2em] md:tracking-[0.18em] uppercase font-['Montserrat'] font-semibold md:font-normal text-[#f5f0ee]">
               Alerts
             </p>
           </div>
-          <div className="p-4 space-y-3">
+          <div className="p-5 md:p-4 space-y-4 md:space-y-3">
             {[
               {
                 msg: `${stats.pendingOrders} orders awaiting processing`,
@@ -537,40 +523,36 @@ export function AdminDashboard() {
               <Link
                 key={i}
                 to={alert.link}
-                className="flex items-start gap-3 p-3 hover:bg-[#f5f0ee]/3 transition-colors group"
+                className="flex items-start gap-3 p-3 md:p-3 hover:bg-[#f5f0ee]/5 transition-colors group rounded-sm md:rounded-none border border-[#d4a59a]/5 md:border-transparent"
               >
-                <span
-                  className={`w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5 ${alert.dot}`}
-                />
-                <p
-                  className={`text-[10px] font-['Montserrat'] ${alert.color} leading-relaxed`}
-                >
+                <span className={`w-2 h-2 md:w-1.5 md:h-1.5 rounded-full flex-shrink-0 mt-1.5 ${alert.dot}`} />
+                <p className={`text-xs md:text-[10px] font-['Montserrat'] font-medium md:font-normal ${alert.color} leading-relaxed`}>
                   {alert.msg}
                 </p>
                 <ArrowRight
-                  size={10}
-                  className="text-[#9a8f8c]/30 group-hover:text-[#9a8f8c] ml-auto flex-shrink-0 mt-0.5 transition-colors"
+                  size={14} md:size={10}
+                  className="text-[#9a8f8c]/40 group-hover:text-[#9a8f8c] ml-auto flex-shrink-0 mt-0.5 transition-colors"
                 />
               </Link>
             ))}
 
-            <div className="border-t border-[#d4a59a]/10 pt-3 mt-1">
-              <p className="text-[9px] tracking-[0.18em] uppercase font-['Montserrat'] text-[#9a8f8c] mb-3">
+            <div className="border-t border-[#d4a59a]/15 md:border-[#d4a59a]/10 pt-5 md:pt-3 mt-4 md:mt-1">
+              <p className="text-xs md:text-[9px] tracking-[0.2em] md:tracking-[0.18em] uppercase font-['Montserrat'] font-semibold md:font-normal text-[#9a8f8c] mb-4 md:mb-3">
                 Quick Actions
               </p>
-              <div className="space-y-2">
+              <div className="space-y-3 md:space-y-2">
                 <Link
                   to="/admin/products"
-                  className="flex items-center gap-2 w-full py-2 px-3 border border-[#d4a59a]/15 text-[10px] font-['Montserrat'] text-[#9a8f8c] hover:text-[#d4a59a] hover:border-[#d4a59a]/30 transition-colors"
+                  className="flex items-center gap-3 md:gap-2 w-full py-3.5 md:py-2 px-4 md:px-3 border border-[#d4a59a]/20 md:border-[#d4a59a]/15 text-xs md:text-[10px] font-['Montserrat'] font-semibold md:font-normal text-[#f5f0ee] md:text-[#9a8f8c] hover:text-[#d4a59a] hover:border-[#d4a59a]/50 transition-colors rounded-sm md:rounded-none"
                 >
-                  <Package size={11} strokeWidth={1.5} />
+                  <Package size={16} md:size={11} strokeWidth={1.5} />
                   Add New Product
                 </Link>
                 <Link
                   to="/admin/content"
-                  className="flex items-center gap-2 w-full py-2 px-3 border border-[#d4a59a]/15 text-[10px] font-['Montserrat'] text-[#9a8f8c] hover:text-[#d4a59a] hover:border-[#d4a59a]/30 transition-colors"
+                  className="flex items-center gap-3 md:gap-2 w-full py-3.5 md:py-2 px-4 md:px-3 border border-[#d4a59a]/20 md:border-[#d4a59a]/15 text-xs md:text-[10px] font-['Montserrat'] font-semibold md:font-normal text-[#f5f0ee] md:text-[#9a8f8c] hover:text-[#d4a59a] hover:border-[#d4a59a]/50 transition-colors rounded-sm md:rounded-none"
                 >
-                  <FileText size={11} strokeWidth={1.5} />
+                  <FileText size={16} md:size={11} strokeWidth={1.5} />
                   Edit Homepage
                 </Link>
               </div>

@@ -111,14 +111,14 @@ export function ProductDetailPage() {
       <div className="bg-[#0a0a0a] min-h-screen">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
           <div className="grid md:grid-cols-2 gap-8 sm:gap-12 md:gap-20">
-            <div className="aspect-[3/4] bg-[#141414] animate-pulse" />
+            <div className="aspect-[3/4] bg-[#141414] animate-pulse rounded-sm" />
             <div className="space-y-4 sm:space-y-5 pt-4">
-              <div className="h-3 w-16 bg-[#141414] animate-pulse" />
-              <div className="h-8 sm:h-9 w-3/4 bg-[#141414] animate-pulse" />
-              <div className="h-4 sm:h-5 w-20 bg-[#141414] animate-pulse" />
-              <div className="h-20 bg-[#141414] animate-pulse" />
-              <div className="h-10 bg-[#141414] animate-pulse" />
-              <div className="h-12 sm:h-14 bg-[#d4a59a]/20 animate-pulse" />
+              <div className="h-4 w-24 bg-[#141414] animate-pulse" />
+              <div className="h-10 sm:h-9 w-3/4 bg-[#141414] animate-pulse" />
+              <div className="h-6 sm:h-5 w-24 bg-[#141414] animate-pulse" />
+              <div className="h-24 bg-[#141414] animate-pulse" />
+              <div className="h-12 bg-[#141414] animate-pulse" />
+              <div className="h-14 sm:h-14 bg-[#d4a59a]/20 animate-pulse rounded-sm" />
             </div>
           </div>
         </div>
@@ -134,35 +134,31 @@ export function ProductDetailPage() {
     <div className="bg-[#0a0a0a] min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 md:py-12">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-1.5 sm:gap-2 mb-6 sm:mb-8 overflow-x-auto whitespace-nowrap pb-2 scrollbar-hide">
+        <div className="flex items-center gap-2 sm:gap-2 mb-6 sm:mb-8 overflow-x-auto whitespace-nowrap pb-2 scrollbar-hide">
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-1.5 text-[10px] tracking-[0.15em] sm:tracking-[0.2em] uppercase font-['Montserrat'] text-[#9a8f8c] hover:text-[#d4a59a] transition-colors"
+            className="flex items-center gap-1.5 text-xs sm:text-sm tracking-[0.15em] sm:tracking-[0.2em] uppercase font-['Montserrat'] font-bold md:font-medium text-[#9a8f8c] hover:text-[#d4a59a] transition-colors"
           >
-            <ArrowLeft size={12} />
+            <ArrowLeft size={16} md:size={14} />
             Back
           </button>
-          <span className="text-[#9a8f8c]/30 text-[10px] sm:text-xs">/</span>
-          <Link to="/shop" className="text-[10px] tracking-[0.1em] sm:tracking-[0.15em] uppercase font-['Montserrat'] text-[#9a8f8c] hover:text-[#d4a59a] transition-colors">
+          <span className="text-[#9a8f8c]/30 text-xs sm:text-sm">/</span>
+          <Link to="/shop" className="text-xs sm:text-sm tracking-[0.1em] sm:tracking-[0.15em] uppercase font-['Montserrat'] font-bold md:font-medium text-[#9a8f8c] hover:text-[#d4a59a] transition-colors">
             Shop
           </Link>
-          <span className="text-[#9a8f8c]/30 text-[10px] sm:text-xs">/</span>
+          <span className="text-[#9a8f8c]/30 text-xs sm:text-sm">/</span>
           <Link
             to={`/shop?category=${product.category}`}
-            className="text-[10px] tracking-[0.1em] sm:tracking-[0.15em] uppercase font-['Montserrat'] text-[#9a8f8c] hover:text-[#d4a59a] transition-colors capitalize"
+            className="text-xs sm:text-sm tracking-[0.1em] sm:tracking-[0.15em] uppercase font-['Montserrat'] font-bold md:font-medium text-[#9a8f8c] hover:text-[#d4a59a] transition-colors capitalize"
           >
             {product.category}
           </Link>
-          <span className="text-[#9a8f8c]/30 text-[10px] sm:text-xs">/</span>
-          <span className="text-[10px] tracking-[0.1em] uppercase font-['Montserrat'] text-[#f5f0ee]/40 truncate max-w-24 sm:max-w-32">
-            {product.name}
-          </span>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 sm:gap-10 md:gap-20">
           {/* ===== IMAGES ===== */}
           <div>
-            <div className="relative overflow-hidden aspect-[3/4] sm:aspect-[4/5] md:aspect-[3/4] bg-[#141414] mb-3 group">
+            <div className="relative overflow-hidden aspect-[4/5] md:aspect-[3/4] bg-[#141414] mb-3 group rounded-sm shadow-xl">
               <motion.img
                 key={imgIdx} src={product.images[imgIdx] || product.image} alt={product.name}
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.35 }}
@@ -170,35 +166,27 @@ export function ProductDetailPage() {
               />
 
               {product.badge && (
-                <span className={`absolute top-3 sm:top-4 left-3 sm:left-4 text-[8px] sm:text-[9px] tracking-[0.15em] sm:tracking-[0.2em] uppercase px-2 py-1 sm:px-2.5 sm:py-1 font-['Montserrat'] font-semibold z-10 ${product.badge === "SALE" ? "bg-[#8b4f5c] text-[#f5f0ee]" : product.badge === "NEW" ? "bg-[#d4a59a] text-[#0a0a0a]" : "bg-[#f5f0ee]/10 text-[#f5f0ee] backdrop-blur-sm"}`}>
+                <span className={`absolute top-4 sm:top-5 left-4 sm:left-5 text-[10px] sm:text-xs tracking-[0.2em] uppercase px-4 py-2 font-['Montserrat'] font-bold z-10 rounded-sm shadow-sm ${product.badge === "SALE" ? "bg-[#8b4f5c] text-[#f5f0ee]" : product.badge === "NEW" ? "bg-[#d4a59a] text-[#0a0a0a]" : "bg-[#f5f0ee]/95 text-[#0a0a0a]"}`}>
                   {product.badge}
                 </span>
               )}
 
               {product.images.length > 1 && (
                 <>
-                  <button onClick={prevImg} className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center bg-[#0a0a0a]/70 text-[#f5f0ee]/60 hover:text-[#d4a59a] md:opacity-0 group-hover:opacity-100 transition-all z-10">
-                    <ChevronLeft size={16} />
+                  <button onClick={prevImg} className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center bg-[#0a0a0a]/80 text-[#f5f0ee] md:opacity-0 group-hover:opacity-100 transition-all z-10 rounded-full shadow-lg">
+                    <ChevronLeft size={24} />
                   </button>
-                  <button onClick={nextImg} className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center bg-[#0a0a0a]/70 text-[#f5f0ee]/60 hover:text-[#d4a59a] md:opacity-0 group-hover:opacity-100 transition-all z-10">
-                    <ChevronRight size={16} />
+                  <button onClick={nextImg} className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center bg-[#0a0a0a]/80 text-[#f5f0ee] md:opacity-0 group-hover:opacity-100 transition-all z-10 rounded-full shadow-lg">
+                    <ChevronRight size={24} />
                   </button>
                 </>
-              )}
-
-              {product.images.length > 1 && (
-                <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
-                  {product.images.map((_, i) => (
-                    <button key={i} onClick={() => setImgIdx(i)} className={`w-1.5 h-1.5 rounded-full transition-all ${imgIdx === i ? "bg-[#d4a59a] w-4" : "bg-[#f5f0ee]/30"}`} />
-                  ))}
-                </div>
               )}
             </div>
 
             {product.images.length > 1 && (
-              <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+              <div className="flex gap-3 overflow-x-auto pb-3 scrollbar-hide mt-4">
                 {product.images.map((img, i) => (
-                  <button key={i} onClick={() => setImgIdx(i)} className={`w-14 h-16 sm:w-16 sm:h-20 shrink-0 overflow-hidden border-2 transition-all ${imgIdx === i ? "border-[#d4a59a] opacity-100" : "border-transparent opacity-60 hover:opacity-100 hover:border-[#d4a59a]/40"}`}>
+                  <button key={i} onClick={() => setImgIdx(i)} className={`w-20 h-24 shrink-0 overflow-hidden border-2 transition-all rounded-sm ${imgIdx === i ? "border-[#d4a59a] opacity-100" : "border-transparent opacity-60 hover:opacity-100 hover:border-[#d4a59a]/40"}`}>
                     <img src={img} alt={`${product.name} view ${i + 1}`} className="w-full h-full object-cover" />
                   </button>
                 ))}
@@ -208,38 +196,38 @@ export function ProductDetailPage() {
 
           {/* ===== PRODUCT INFO ===== */}
           <div className="py-2">
-            <p className="text-[9px] tracking-[0.2em] sm:tracking-[0.3em] uppercase text-[#9a8f8c] font-['Montserrat'] mb-2 sm:mb-3 capitalize">
+            <p className="text-xs sm:text-sm tracking-[0.2em] sm:tracking-[0.3em] uppercase text-[#d4a59a] font-['Montserrat'] font-bold md:font-semibold mb-3 sm:mb-4 capitalize">
               {product.category === "briefs" ? "Briefs & Thongs" : product.category}
             </p>
 
-            <h1 className="font-['Cormorant_Garamond'] text-3xl sm:text-4xl font-medium text-[#f5f0ee] mb-3 sm:mb-4 leading-tight">
+            <h1 className="font-['Cormorant_Garamond'] text-4xl sm:text-5xl md:text-6xl font-medium text-[#f5f0ee] mb-4 sm:mb-6 leading-tight">
               {product.name}
             </h1>
 
             {product.rating > 0 && (
-              <div className="flex items-center gap-2 mb-4 sm:mb-5">
-                <div className="flex gap-0.5">
+              <div className="flex items-center gap-3 mb-6 sm:mb-6">
+                <div className="flex gap-1">
                   {[1, 2, 3, 4, 5].map((s) => (
-                    <Star key={s} size={12} className={s <= Math.round(product.rating) ? "text-[#d4a59a]" : "text-[#3a3a3a]"} fill={s <= Math.round(product.rating) ? "currentColor" : "none"} strokeWidth={1} />
+                    <Star key={s} size={18} md:size={16} className={s <= Math.round(product.rating) ? "text-[#d4a59a]" : "text-[#3a3a3a]"} fill={s <= Math.round(product.rating) ? "currentColor" : "none"} strokeWidth={1} />
                   ))}
                 </div>
-                <span className="text-[10px] sm:text-xs text-[#9a8f8c] font-['Montserrat']">
+                <span className="text-sm sm:text-sm text-[#9a8f8c] font-['Montserrat'] font-medium">
                   {product.rating} ({product.reviewCount} reviews)
                 </span>
               </div>
             )}
 
-            <div className="flex items-baseline gap-2 sm:gap-3 mb-5 sm:mb-6">
-              <span className="text-xl sm:text-2xl font-['Montserrat'] text-[#f5f0ee]">
+            <div className="flex items-baseline gap-3 sm:gap-4 mb-8 sm:mb-8">
+              <span className="text-3xl sm:text-3xl md:text-4xl font-['Montserrat'] font-bold md:font-medium text-[#f5f0ee]">
                 £{product.price}
               </span>
               {product.originalPrice && (
                 <>
-                  <span className="font-['Montserrat'] text-sm sm:text-base text-[#9a8f8c] line-through">
+                  <span className="font-['Montserrat'] text-lg sm:text-lg md:text-xl text-[#9a8f8c] line-through font-medium">
                     £{product.originalPrice}
                   </span>
                   {discount && (
-                    <span className="text-[10px] sm:text-xs font-['Montserrat'] text-[#8b4f5c] font-semibold">
+                    <span className="text-xs sm:text-sm md:text-base font-['Montserrat'] text-[#8b4f5c] font-bold bg-[#8b4f5c]/10 px-3 py-1.5 rounded-sm">
                       Save {discount}%
                     </span>
                   )}
@@ -247,20 +235,20 @@ export function ProductDetailPage() {
               )}
             </div>
 
-            <p className="text-xs sm:text-sm text-[#9a8f8c] font-['Montserrat'] leading-relaxed sm:leading-loose mb-6 sm:mb-8 border-b border-[#d4a59a]/10 pb-6 sm:pb-8">
+            <p className="text-sm sm:text-base md:text-lg text-[#9a8f8c] font-['Montserrat'] leading-relaxed sm:leading-loose mb-8 sm:mb-10 border-b border-[#d4a59a]/10 pb-8 sm:pb-10 font-medium md:font-normal">
               {product.description}
             </p>
 
             {product.colors.length > 0 && (
-              <div className="mb-5 sm:mb-6">
-                <p className="text-[9px] sm:text-[10px] tracking-[0.15em] sm:tracking-[0.2em] uppercase font-['Montserrat'] text-[#f5f0ee] mb-2 sm:mb-3">
-                  Colour: <span className="text-[#d4a59a]">{selectedColor}</span>
+              <div className="mb-8 sm:mb-8">
+                <p className="text-xs sm:text-sm tracking-[0.2em] uppercase font-['Montserrat'] font-bold md:font-semibold text-[#f5f0ee] mb-4">
+                  Colour: <span className="text-[#d4a59a] font-bold ml-1">{selectedColor}</span>
                 </p>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-3">
                   {product.colors.map((color) => (
                     <button
                       key={color} onClick={() => setSelectedColor(color)}
-                      className={`px-3 py-1.5 sm:px-4 sm:py-2 text-[10px] sm:text-xs font-['Montserrat'] tracking-wide border transition-all ${selectedColor === color ? "border-[#d4a59a] text-[#d4a59a] bg-[#d4a59a]/5" : "border-[#d4a59a]/20 text-[#9a8f8c] hover:border-[#d4a59a]/50 hover:text-[#f5f0ee]"}`}
+                      className={`px-5 py-3 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-['Montserrat'] font-bold md:font-medium tracking-wide border transition-all rounded-sm ${selectedColor === color ? "border-[#d4a59a] text-[#d4a59a] bg-[#d4a59a]/10" : "border-[#d4a59a]/20 text-[#9a8f8c] hover:border-[#d4a59a]/60 hover:text-[#f5f0ee] bg-[#111] md:bg-transparent"}`}
                     >
                       {color}
                     </button>
@@ -270,21 +258,21 @@ export function ProductDetailPage() {
             )}
 
             {product.sizes.length > 0 && (
-              <div className="mb-6 sm:mb-8">
-                <div className="flex items-center justify-between mb-2 sm:mb-3">
-                  <p className="text-[9px] sm:text-[10px] tracking-[0.15em] sm:tracking-[0.2em] uppercase font-['Montserrat'] text-[#f5f0ee]">
-                    Size: <span className="text-[#d4a59a]">{selectedSize}</span>
+              <div className="mb-10 sm:mb-10">
+                <div className="flex items-center justify-between mb-4">
+                  <p className="text-xs sm:text-sm tracking-[0.2em] uppercase font-['Montserrat'] font-bold md:font-semibold text-[#f5f0ee]">
+                    Size: <span className="text-[#d4a59a] font-bold ml-1">{selectedSize}</span>
                   </p>
-                  <button onClick={() => setSizeGuideOpen(true)} className="flex items-center gap-1 sm:gap-1.5 text-[8px] sm:text-[9px] tracking-[0.1em] sm:tracking-[0.15em] uppercase font-['Montserrat'] text-[#9a8f8c] hover:text-[#d4a59a] transition-colors">
-                    <Ruler size={10} strokeWidth={1.5} className="sm:w-[11px] sm:h-[11px]" />
+                  <button onClick={() => setSizeGuideOpen(true)} className="flex items-center gap-2 text-[10px] sm:text-xs tracking-[0.15em] uppercase font-['Montserrat'] font-bold text-[#9a8f8c] hover:text-[#d4a59a] transition-colors border-b border-[#9a8f8c]/30 hover:border-[#d4a59a] pb-0.5">
+                    <Ruler size={16} md:size={14} strokeWidth={2} />
                     Size Guide
                   </button>
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="grid grid-cols-5 gap-3">
                   {product.sizes.map((size) => (
                     <button
                       key={size} onClick={() => setSelectedSize(size)}
-                      className={`min-w-[44px] sm:min-w-[52px] px-2 py-1.5 sm:px-3 sm:py-2 text-[10px] sm:text-xs font-['Montserrat'] tracking-wide border transition-all text-center ${selectedSize === size ? "border-[#d4a59a] text-[#d4a59a] bg-[#d4a59a]/5" : "border-[#d4a59a]/20 text-[#9a8f8c] hover:border-[#d4a59a]/50 hover:text-[#f5f0ee]"}`}
+                      className={`py-3 sm:py-2.5 text-xs sm:text-sm font-['Montserrat'] font-bold md:font-medium tracking-wide border transition-all text-center rounded-sm ${selectedSize === size ? "border-[#d4a59a] text-[#d4a59a] bg-[#d4a59a]/10" : "border-[#d4a59a]/20 text-[#9a8f8c] hover:border-[#d4a59a]/60 hover:text-[#f5f0ee] bg-[#111] md:bg-transparent"}`}
                     >
                       {size}
                     </button>
@@ -293,54 +281,62 @@ export function ProductDetailPage() {
               </div>
             )}
 
-            <div className="flex gap-2 sm:gap-3 mb-4">
-              <div className="flex items-center border border-[#d4a59a]/20 h-10 sm:h-12">
-                <button onClick={() => setQuantity((q) => Math.max(1, q - 1))} className="px-2 sm:px-3 h-full text-[#9a8f8c] hover:text-[#d4a59a] transition-colors">
-                  <Minus size={14} />
+            {/* FIX: SLIMMER Quantity Selector and Add to Cart Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-6">
+              
+              {/* SLIMMER GRID FOR MOBILE */}
+              <div className="grid grid-cols-3 sm:flex sm:items-center border border-[#d4a59a]/30 h-12 sm:h-14 bg-[#111] md:bg-transparent rounded-sm w-full sm:w-auto flex-shrink-0">
+                <button onClick={() => setQuantity((q) => Math.max(1, q - 1))} className="flex items-center justify-center h-full text-[#9a8f8c] hover:text-[#d4a59a] transition-colors sm:px-5">
+                  <Minus size={16} className="sm:w-[18px] sm:h-[18px]" />
                 </button>
-                <span className="px-3 sm:px-4 h-full flex items-center justify-center text-xs sm:text-sm text-[#f5f0ee] font-['Montserrat'] border-x border-[#d4a59a]/20 min-w-[40px] sm:min-w-[48px] text-center">
+                <span className="flex items-center justify-center h-full text-sm text-[#f5f0ee] font-['Montserrat'] font-bold border-x border-[#d4a59a]/30 sm:min-w-[64px]">
                   {quantity}
                 </span>
-                <button onClick={() => setQuantity((q) => q + 1)} className="px-2 sm:px-3 h-full text-[#9a8f8c] hover:text-[#d4a59a] transition-colors">
-                  <Plus size={14} />
+                <button onClick={() => setQuantity((q) => q + 1)} className="flex items-center justify-center h-full text-[#9a8f8c] hover:text-[#d4a59a] transition-colors sm:px-5">
+                  <Plus size={16} className="sm:w-[18px] sm:h-[18px]" />
                 </button>
               </div>
 
-              <button
-                onClick={handleAddToCart} disabled={addingToCart || !product.inStock}
-                className="flex-1 flex items-center justify-center gap-2 sm:gap-3 bg-[#d4a59a] text-[#0a0a0a] h-10 sm:h-12 text-[10px] sm:text-xs tracking-[0.15em] sm:tracking-[0.2em] uppercase font-['Montserrat'] font-semibold hover:bg-[#f2c6b4] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              >
-                {addingToCart ? <span>Adding…</span> : !product.inStock ? <span>Out of Stock</span> : <><ShoppingBag size={14} strokeWidth={1.5} />Add to Bag</>}
-              </button>
+              {/* SLIMMER BUTTONS */}
+              <div className="flex gap-3 sm:gap-4 w-full">
+                <button
+                  onClick={handleAddToCart} disabled={addingToCart || !product.inStock}
+                  className="flex-1 flex items-center justify-center gap-2 sm:gap-3 bg-[#d4a59a] text-[#0a0a0a] h-12 sm:h-14 text-xs sm:text-sm tracking-[0.15em] sm:tracking-[0.2em] uppercase font-['Montserrat'] font-bold hover:bg-[#f2c6b4] disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm sm:shadow-lg rounded-sm"
+                >
+                  {addingToCart ? <span>Adding…</span> : !product.inStock ? <span>Out of Stock</span> : <><ShoppingBag size={18} className="sm:w-[20px] sm:h-[20px]" strokeWidth={2} />Add to Bag</>}
+                </button>
 
-              <button
-                onClick={handleWishlist} disabled={wishlistLoading}
-                className={`w-10 sm:w-14 h-10 sm:h-12 flex items-center justify-center border transition-all ${isWishlisted ? "border-[#d4a59a] text-[#d4a59a] bg-[#d4a59a]/5" : "border-[#d4a59a]/20 text-[#9a8f8c] hover:border-[#d4a59a] hover:text-[#d4a59a]"}`}
-                aria-label="Save to wishlist"
-              >
-                <Heart size={16} strokeWidth={1.5} fill={isWishlisted ? "currentColor" : "none"} />
-              </button>
+                <button
+                  onClick={handleWishlist} disabled={wishlistLoading}
+                  className={`w-12 sm:w-14 h-12 sm:h-14 flex items-center justify-center border transition-all rounded-sm shadow-sm ${isWishlisted ? "border-[#d4a59a] text-[#d4a59a] bg-[#d4a59a]/10" : "border-[#d4a59a]/30 text-[#9a8f8c] bg-[#111] md:bg-transparent hover:border-[#d4a59a] hover:text-[#d4a59a]"}`}
+                  aria-label="Save to wishlist"
+                >
+                  <Heart size={20} md:size={20} strokeWidth={1.5} fill={isWishlisted ? "currentColor" : "none"} />
+                </button>
+              </div>
             </div>
 
             {product.stockCount !== undefined && product.stockCount <= 8 && product.inStock && (
-              <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-[10px] sm:text-xs text-[#8b4f5c] font-['Montserrat'] mb-4 flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#8b4f5c] flex-shrink-0" />
-                Only {product.stockCount} remaining
+              <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-xs sm:text-sm text-[#8b4f5c] font-['Montserrat'] font-bold mb-8 flex items-center gap-2 bg-[#8b4f5c]/5 p-3 rounded-sm border border-[#8b4f5c]/20">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#8b4f5c] flex-shrink-0 animate-pulse" />
+                Only {product.stockCount} remaining in stock
               </motion.p>
             )}
 
-            <div className="border-t border-[#d4a59a]/10 pt-5 sm:pt-7 mt-4 grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+            <div className="border-t border-[#d4a59a]/15 pt-8 mt-8 grid grid-cols-1 sm:grid-cols-3 gap-5">
               {[
                 { icon: Package, label: "Free Shipping", sub: "Orders over £150" },
                 { icon: RotateCcw, label: "Free Returns", sub: "30-day policy" },
-                { icon: Shield, label: "Secure Payment", sub: "SSL encrypted", className: "col-span-2 sm:col-span-1" },
+                { icon: Shield, label: "Secure Payment", sub: "100% encrypted" },
               ].map((item) => (
-                <div key={item.label} className={`flex flex-col items-center text-center gap-1.5 sm:gap-2 ${item.className || ""}`}>
-                  <item.icon size={16} strokeWidth={1.5} className="text-[#d4a59a]" />
-                  <p className="text-[8px] sm:text-[9px] tracking-[0.1em] uppercase font-['Montserrat'] text-[#f5f0ee]">
-                    {item.label}
-                  </p>
-                  <p className="text-[8px] sm:text-[9px] font-['Montserrat'] text-[#9a8f8c]">{item.sub}</p>
+                <div key={item.label} className="flex sm:flex-col items-center sm:text-center gap-4 sm:gap-2.5 bg-[#111] md:bg-transparent p-4 sm:p-0 rounded-sm border border-[#d4a59a]/5 md:border-none">
+                  <item.icon size={24} md:size={22} strokeWidth={1.5} className="text-[#d4a59a] shrink-0" />
+                  <div>
+                    <p className="text-[11px] sm:text-xs tracking-[0.15em] uppercase font-['Montserrat'] font-bold text-[#f5f0ee] mb-1 sm:mb-0">
+                      {item.label}
+                    </p>
+                    <p className="text-[10px] sm:text-[10px] font-['Montserrat'] text-[#9a8f8c] font-medium sm:font-normal">{item.sub}</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -348,12 +344,12 @@ export function ProductDetailPage() {
         </div>
 
         {product.longDescription && (
-          <div className="mt-12 sm:mt-16 md:mt-20 border-t border-[#d4a59a]/10 pt-8 sm:pt-12">
-            <div className="max-w-2xl">
-              <h3 className="font-['Cormorant_Garamond'] text-xl sm:text-2xl font-light text-[#f5f0ee] mb-4 sm:mb-5">
+          <div className="mt-16 sm:mt-20 md:mt-28 border-t border-[#d4a59a]/15 pt-12 sm:pt-14 bg-[#0d0d0d] md:bg-transparent p-6 md:p-0 rounded-sm md:rounded-none">
+            <div className="max-w-3xl">
+              <h3 className="font-['Cormorant_Garamond'] text-3xl sm:text-3xl font-medium text-[#f5f0ee] mb-6 sm:mb-6">
                 About This Piece
               </h3>
-              <p className="text-[#9a8f8c] text-xs sm:text-sm font-['Montserrat'] leading-relaxed sm:leading-loose">
+              <p className="text-[#9a8f8c] text-sm sm:text-base md:text-lg font-['Montserrat'] leading-relaxed sm:leading-loose font-medium md:font-normal">
                 {product.longDescription}
               </p>
             </div>

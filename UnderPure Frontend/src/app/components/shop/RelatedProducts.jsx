@@ -29,32 +29,32 @@ export function RelatedProducts({ currentProductId, category }) {
   if (!loading && related.length === 0) return null;
 
   return (
-    <section className="border-t border-[#d4a59a]/10 pt-12 sm:pt-16 mt-12 sm:mt-16">
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 sm:mb-10 gap-4">
+    <section className="border-t border-[#d4a59a]/15 pt-16 md:pt-20 mt-16 md:mt-20">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 md:mb-12 gap-5 text-center sm:text-left">
         <div>
-          <p className="text-[#d4a59a] text-[8px] sm:text-[9px] tracking-[0.3em] uppercase font-['Montserrat'] mb-2">
+          <p className="text-[#d4a59a] text-[10px] md:text-[10px] tracking-[0.3em] uppercase font-['Montserrat'] font-bold md:font-semibold mb-3">
             You May Also Love
           </p>
-          <h2 className="font-['Cormorant_Garamond'] text-2xl sm:text-3xl font-light text-[#f5f0ee]">
+          <h2 className="font-['Cormorant_Garamond'] text-4xl md:text-4xl font-medium md:font-light text-[#f5f0ee]">
             Complete Your Collection
           </h2>
         </div>
         <Link
           to={`/shop?category=${category}`}
-          className="flex items-center gap-1.5 text-[10px] sm:text-xs tracking-[0.15em] uppercase font-['Montserrat'] text-[#9a8f8c] hover:text-[#d4a59a] transition-colors"
+          className="flex items-center justify-center gap-2 text-[10px] md:text-[11px] tracking-[0.2em] uppercase font-['Montserrat'] font-bold text-[#9a8f8c] hover:text-[#d4a59a] transition-colors border border-[#9a8f8c]/20 sm:border-none py-3 sm:py-0 px-6 sm:px-0 rounded-sm sm:rounded-none bg-[#111] sm:bg-transparent"
         >
-          View All <ArrowRight size={13} />
+          View All <ArrowRight size={14} />
         </Link>
       </div>
 
       {loading ? (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="aspect-[3/4] bg-[#141414] animate-pulse" />
+            <div key={i} className="aspect-[3/4] bg-[#141414] animate-pulse rounded-sm" />
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           {related.map((product, i) => (
             <ProductCard key={product.id} product={product} index={i} />
           ))}
